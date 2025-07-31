@@ -60,6 +60,3 @@ curl "http://localhost:5000/api/AdPlatform/search?location=/ru/svrd/revda"
 - Clean Architecture
 - Swagger для документации
 - xUnit для тестирования
-
-## 📊 Примеры запросов
-Смотрите [примеры тестовых запросов](docs/EXAMPLES.md)
