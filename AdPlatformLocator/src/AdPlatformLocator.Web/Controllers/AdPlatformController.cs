@@ -21,11 +21,7 @@ namespace AdPlatformLocator.Web.Controllers
             _logger = logger;
         }
 
-        /// <summary>
-        /// Загружает рекламные площадки из файла
-        /// </summary>
-        /// <param name="file">Текстовый файл с данными о площадках</param>
-        /// <returns></returns>
+        
         [HttpPost("upload")]
         public async Task<IActionResult> UploadPlatforms([FromForm] UploadPlatformRequest request)
         {
@@ -58,11 +54,7 @@ namespace AdPlatformLocator.Web.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-        /// <summary>
-        /// Ищет рекламные площадки для указанной локации
-        /// </summary>
-        /// <param name="location">Локация в формате /ru/msk</param>
-        /// <returns>Список подходящих площадок</returns>
+        
         [HttpGet("search")]
         public IActionResult SearchPlatforms([FromQuery] string location)
         {

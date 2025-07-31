@@ -5,13 +5,17 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E45D4270-B068-47E0-96A1-D0749B7CF28D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdPlatformLocator.Web", "src\AdPlatformLocator.Web\AdPlatformLocator.Web.csproj", "{B4577572-4C68-4720-8D80-4C950191A74B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdPlatformLocator.Web", "src\AdPlatformLocator.Web\AdPlatformLocator.Web.csproj", "{B4577572-4C68-4720-8D80-4C950191A74B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdPlatformLocator.Application", "src\AdPlatformLocator.Application\AdPlatformLocator.Application.csproj", "{973B3129-188B-45CD-92FA-67215120CCF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdPlatformLocator.Application", "src\AdPlatformLocator.Application\AdPlatformLocator.Application.csproj", "{973B3129-188B-45CD-92FA-67215120CCF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdPlatformLocator.Domain", "src\AdPlatformLocator.Domain\AdPlatformLocator.Domain.csproj", "{01068071-A01A-4187-B13C-B25E273DA0BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdPlatformLocator.Domain", "src\AdPlatformLocator.Domain\AdPlatformLocator.Domain.csproj", "{01068071-A01A-4187-B13C-B25E273DA0BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdPlatformLocator.Infrastructure", "src\AdPlatformLocator.Infrastructure\AdPlatformLocator.Infrastructure.csproj", "{34499BC4-4C51-4F83-BAD2-4FBAE7A9DD11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdPlatformLocator.Infrastructure", "src\AdPlatformLocator.Infrastructure\AdPlatformLocator.Infrastructure.csproj", "{34499BC4-4C51-4F83-BAD2-4FBAE7A9DD11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0C0F83E5-44D2-4D71-A208-B82609373672}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdPlatformTest", "Test\AdPlatformTest\AdPlatformTest.csproj", "{B7D8DB9E-B9BE-4A41-B3B2-D21E15AC27DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,10 @@ Global
 		{34499BC4-4C51-4F83-BAD2-4FBAE7A9DD11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34499BC4-4C51-4F83-BAD2-4FBAE7A9DD11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34499BC4-4C51-4F83-BAD2-4FBAE7A9DD11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7D8DB9E-B9BE-4A41-B3B2-D21E15AC27DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7D8DB9E-B9BE-4A41-B3B2-D21E15AC27DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7D8DB9E-B9BE-4A41-B3B2-D21E15AC27DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7D8DB9E-B9BE-4A41-B3B2-D21E15AC27DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +52,7 @@ Global
 		{973B3129-188B-45CD-92FA-67215120CCF8} = {E45D4270-B068-47E0-96A1-D0749B7CF28D}
 		{01068071-A01A-4187-B13C-B25E273DA0BF} = {E45D4270-B068-47E0-96A1-D0749B7CF28D}
 		{34499BC4-4C51-4F83-BAD2-4FBAE7A9DD11} = {E45D4270-B068-47E0-96A1-D0749B7CF28D}
+		{B7D8DB9E-B9BE-4A41-B3B2-D21E15AC27DA} = {0C0F83E5-44D2-4D71-A208-B82609373672}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5020BE64-4755-4EED-BD5A-4404B028F1D1}

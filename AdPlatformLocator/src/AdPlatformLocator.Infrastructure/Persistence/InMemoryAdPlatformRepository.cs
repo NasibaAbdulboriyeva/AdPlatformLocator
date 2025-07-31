@@ -13,16 +13,31 @@ namespace AdPlatformLocator.Infrastructure.Persistence
 
         public void AddPlatforms(IEnumerable<AdPlatform> platforms)
         {
+            if (platforms == null)
+            {
+                throw new ArgumentNullException(nameof(platforms), "Platforms collection cannot be null");
+            }
+
             foreach (var platform in platforms)
             {
+                if (platform?.Locations == null) continue;
+
                 foreach (var location in platform.Locations)
                 {
-                    _locationIndex.AddOrUpdate(
-                        location.Trim().ToLower(), // Нормализуем локации
-                        new List<string> { platform.Name },
-                        (_, list) => { list.Add(platform.Name); return list; });
+                    if (string.IsNullOrWhiteSpace(location)) continue;
 
-                    Console.WriteLine($"Added: {platform.Name} -> {location}"); // Логирование
+                    var normalizedLocation = location.Trim().ToLower()
+                        .Replace("//", "/", StringComparison.Ordinal);
+
+                    _locationIndex.AddOrUpdate(
+                        normalizedLocation,
+                        new List<string> { platform.Name },
+                        (_, list) =>
+                        {
+                            if (!list.Contains(platform.Name))
+                                list.Add(platform.Name);
+                            return list;
+                        });
                 }
             }
         }
@@ -30,23 +45,24 @@ namespace AdPlatformLocator.Infrastructure.Persistence
         public IEnumerable<string> FindPlatformsForLocation(string location)
         {
             var searchLocation = location?.Trim().ToLower() ?? string.Empty;
-            Console.WriteLine($"Searching for: {searchLocation}"); // Логирование
-
             var result = new HashSet<string>();
 
+            // Проверяем все уровни иерархии
             while (!string.IsNullOrEmpty(searchLocation))
             {
                 if (_locationIndex.TryGetValue(searchLocation, out var platforms))
                 {
-                    Console.WriteLine($"Found {platforms.Count} platforms for {searchLocation}");
-                    foreach (var p in platforms) result.Add(p);
+                    foreach (var platform in platforms)
+                    {
+                        result.Add(platform);
+                    }
                 }
 
                 var lastSlash = searchLocation.LastIndexOf('/');
-                searchLocation = lastSlash >= 0 ? searchLocation[..lastSlash] : null;
+                searchLocation = lastSlash > 0 ? searchLocation[..lastSlash] : null;
             }
 
             return result;
         }
     }
-}
+    }

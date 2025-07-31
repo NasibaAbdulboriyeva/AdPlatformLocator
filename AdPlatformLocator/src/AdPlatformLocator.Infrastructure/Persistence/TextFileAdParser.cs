@@ -38,9 +38,9 @@ namespace AdPlatformLocator.Infrastructure.Persistence
                         continue;
                     }
 
-                    if (platform.Locations.Count == 0)
+                    if (!platform.Locations.Any())
                     {
-                        errors.Add($"Line {index}: No locations specified");
+                        errors.Add($"Line {index}: No locations found for platform");
                         continue;
                     }
 
@@ -64,23 +64,22 @@ namespace AdPlatformLocator.Infrastructure.Persistence
 
             return platforms;
         }
+            private AdPlatform? ParseLine(string line)
+            {
+                if (string.IsNullOrWhiteSpace(line))
+                    return null;
 
-        private static AdPlatform? ParseLine(string line)
-        {
-            if (string.IsNullOrWhiteSpace(line))
-                return null;
+                var parts = line.Split(':', 2, StringSplitOptions.TrimEntries);
+                if (parts.Length != 2)
+                    throw new FormatException($"Invalid line format - expected 'PlatformName:Location1,Location2'");
 
-            var parts = line.Split(':', 2, StringSplitOptions.TrimEntries);
-            if (parts.Length != 2)
-                throw new FormatException($"Invalid line format: {line}");
+                var name = parts[0];
+                if (string.IsNullOrWhiteSpace(name))
+                    throw new FormatException("Platform name cannot be empty");
 
-            var name = parts[0];
-            var locations = parts[1].Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-
-            if (locations.Length == 0)
-                throw new FormatException($"No locations found for platform: {name}");
-
-            return new AdPlatform(name, locations);
-        }
+                var locations = parts[1].Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                return new AdPlatform(name, locations);
+            }
+        
     }
-}
+    }
