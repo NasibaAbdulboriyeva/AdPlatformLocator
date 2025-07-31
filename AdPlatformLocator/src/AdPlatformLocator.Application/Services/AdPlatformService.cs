@@ -1,62 +1,34 @@
-﻿using AdPlatformLocator.Application.Abstarctions.Services;
+﻿
 using AdPlatformLocator.Application.Abstarctions;
-using AdPlatformLocator.Domain.Entities;
-using System.Text;
-using AdPlatformLocator.Application.Dtos;
+using AdPlatformLocator.Application.Abstarctions.Services;
+
 
 namespace AdPlatformLocator.Application.Services
 {
     public class AdPlatformService : IAdPlatformService
     {
-        private readonly IAdPlatformRepository _repository;
+        private readonly IAdPlatformRepository _adRepository;
+        private readonly IAdFileParser _fileParser;
 
-        public AdPlatformService(IAdPlatformRepository repository)
+        public AdPlatformService(IAdPlatformRepository adRepository, IAdFileParser fileParser)
         {
-            _repository = repository;
+            _adRepository = adRepository;
+            _fileParser = fileParser;
         }
 
-        public void LoadFromFile(Stream fileStream)
+        public async Task LoadPlatformsFromFile(Stream fileStream)
         {
-            using var reader = new StreamReader(fileStream, Encoding.UTF8);
-            var platforms = new List<AdPlatform>();
-
-            while (!reader.EndOfStream)
-            {
-                var line = reader.ReadLine();
-                if (string.IsNullOrWhiteSpace(line)) continue;
-
-                var parts = line.Split(':');
-                if (parts.Length != 2) continue;
-
-                var name = parts[0].Trim();
-                var locationsRaw = parts[1].Split(',', StringSplitOptions.RemoveEmptyEntries);
-
-                var locations = locationsRaw
-                    .Select(l => new Location(l.Trim()))
-                    .ToList();
-
-                platforms.Add(new AdPlatform(name, locations));
-            }
-
-            _repository.OverWriteAll(platforms);
+            var platforms = await _fileParser.ParseAsync(fileStream);
+            _adRepository.Clear();
+            _adRepository.AddPlatforms(platforms);
         }
 
-        public List<AdPlatformResponse> FindPlatformsForLocation(SearchRequest request)
+        public IEnumerable<string> FindPlatformsForLocation(string location)
         {
-            if (string.IsNullOrWhiteSpace(request.LocationPath))
-                throw new ArgumentException("Location is required");
+            if (string.IsNullOrWhiteSpace(location))
+                throw new ArgumentException("Location cannot be empty", nameof(location));
 
-            var location = new Location(request.LocationPath);
-
-            var all = _repository.GetAll();
-
-            var result = all
-                .Where(p => p.Locations.Any(loc => location.IsNestedUnder(loc)))
-                .Select(p => new AdPlatformResponse { Name = p.Name })
-                .ToList();
-
-            return result;
+            return _adRepository.FindPlatformsForLocation(location);
         }
-
     }
 }

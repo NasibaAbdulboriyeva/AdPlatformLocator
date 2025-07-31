@@ -10,7 +10,7 @@ namespace AdPlatformLocator.Application.Abstarctions.Services
 {
     public interface IAdPlatformService
     {
-        void LoadFromFile(Stream fileStream);
-        List<AdPlatformResponse> FindPlatformsForLocation(SearchRequest request);
+        Task LoadPlatformsFromFile(Stream fileStream);
+        IEnumerable<string> FindPlatformsForLocation(string location);
     }
 }

@@ -1,18 +1,14 @@
 ﻿namespace AdPlatformLocator.Domain.Entities;
 
+// Models/AdPlatform.cs
 public class AdPlatform
 {
     public string Name { get; }
-    public IReadOnlyCollection<Location> Locations { get; }
+    public IReadOnlyList<string> Locations { get; }
 
-    public AdPlatform(string name, IEnumerable<Location> locations)
+    public AdPlatform(string name, IEnumerable<string> locations)
     {
-        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required");
-        if (locations == null || !locations.Any()) throw new ArgumentException("At least one location is required");
-
-        Name = name;
-        Locations = locations.ToList().AsReadOnly();
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Locations = locations?.ToList() ?? throw new ArgumentNullException(nameof(locations));
     }
-
-    public override string ToString() => Name;
 }

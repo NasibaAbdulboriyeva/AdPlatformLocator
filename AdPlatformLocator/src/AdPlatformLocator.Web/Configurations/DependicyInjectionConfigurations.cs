@@ -11,7 +11,8 @@ namespace AdPlatformLocator.Web.Configurations
         {
 
 
-            builder.Services.AddScoped<IAdPlatformRepository, InMemoryAdPlatformRepository>();
+            builder.Services.AddSingleton<IAdPlatformRepository, InMemoryAdPlatformRepository>();
+            builder.Services.AddScoped<IAdFileParser, TextFileAdParser>();
 
             builder.Services.AddScoped<IAdPlatformService, AdPlatformService>();
         }

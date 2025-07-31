@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace AdPlatformLocator.Application.Abstarctions
 {
-
-    public interface IAdPlatformRepository
+    public interface IAdFileParser
     {
-        void Clear();
-        void AddPlatforms(IEnumerable<AdPlatform> platforms);
-        IEnumerable<string> FindPlatformsForLocation(string location);
+        Task<IEnumerable<AdPlatform>> ParseAsync(Stream fileStream);
     }
-
 }
